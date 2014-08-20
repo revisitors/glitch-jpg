@@ -1,0 +1,11 @@
+{
+  "name": "glitch-jpg",
+  "version": "1.0.0",
+  "description": "Dead simple jpg glitching",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ryan Kois",
+  "license": "GPLv3"
+}
