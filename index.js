@@ -1,5 +1,3 @@
-var fs = require('fs')
-
 module.exports = function(buf) {
   for (i = 400; i < buf.length - 1; i++) {
     if (buf[i] > 1) {
