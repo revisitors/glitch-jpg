@@ -1,6 +1,6 @@
 {
   "name": "glitch-jpg",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Dead simple jpg glitching",
   "main": "index.js",
   "scripts": {
