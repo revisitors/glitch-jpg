@@ -1,6 +1,7 @@
 module.exports = function(buf) {
-  for (i = 400; i < buf.length - 1; i++) {
-    if (buf[i] > 1) {
+  var i
+  for (i = 0; i < buf.length - 1; i++) {
+    if (String.fromCharCode(buf[i]) ===  'x') {
       // over 254 and things do not work.
       buf[i] = rng(1,254)
     }
