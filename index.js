@@ -20,8 +20,6 @@ module.exports = function(buf) {
     } else if (header_length-- > 0) {
       // skip forward until after we're past header.
       continue
-    } else {
-      continue;
     }
 
 
