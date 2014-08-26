@@ -7,5 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ryan Kois",
-  "license": "GPLv3"
+  "license": "GPLv3",
+  "dependencies": {
+    "through2-map": "^1.4.0"
+  }
 }
