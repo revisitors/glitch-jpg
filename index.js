@@ -1,11 +1,12 @@
-module.exports = function(buf, intensity) {
+var map = require('through2-map')
+
+function glitch(buf, intensity) {
   if (typeof intensity !== 'number') {
     intensity = 0.1
   }
   var header_length = 0
   var sos_chars_seen = 0
-  var last_byte = null
-  var i
+  var last_byte
   var end = buf.length - 1
 
   for (var i = 0; i < end; i++) {
@@ -16,9 +17,9 @@ module.exports = function(buf, intensity) {
        is. We'll skip forward that many bytes before we mess with
        things so we don't make the jpeg invalid.
      */
-    if (sos_chars_seen === 0 && buf[i] === 0xFF) {
+    if (sos_chars_seen === 0 && buf[i] === 255) {
       sos_chars_seen = 1
-    } else if (sos_chars_seen === 1 && buf[i] === 0xDA) {
+    } else if (sos_chars_seen === 1 && buf[i] === 218) {
       sos_chars_seen = 2
       header_length = buf[i+1] + buf[i+2]
     } else if (header_length-- > 0) {
@@ -27,7 +28,7 @@ module.exports = function(buf, intensity) {
     }
 
 
-    if (buf[i] === 0xFF || last_byte === 0xFF) {
+    if (buf[i] === 255 || last_byte === 255) {
       // Just skip over things with FF as that's bit of a touchy thing
       // when it comes to huffman encoding that I'd prefer to ignore
       // for the moment.
@@ -46,7 +47,7 @@ module.exports = function(buf, intensity) {
     }
     
     // over 254 and things do not work.
-    buf[i] = rng(1,254)
+    buf[i] = rng(1, 254)
     
   }
   return buf
@@ -55,3 +56,13 @@ module.exports = function(buf, intensity) {
 function rng(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
+
+function glitchStream(intensity) {
+  return map(function(buf){
+    return glitch(buf, intensity)
+  })
+}
+
+glitch.stream = glitchStream
+
+module.exports = glitch
